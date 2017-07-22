@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zeligzhou.github.io/"/>
-  <updated>2017-04-19T14:54:50.000Z</updated>
+  <updated>2017-07-22T09:41:32.000Z</updated>
   <id>http://zeligzhou.github.io/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SVG服务器渲染</title>
+    <link href="http://zeligzhou.github.io/2017/07/22/svg-ssr/"/>
+    <id>http://zeligzhou.github.io/2017/07/22/svg-ssr/</id>
+    <published>2017-07-22T09:35:21.000Z</published>
+    <updated>2017-07-22T09:41:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这个月几乎全部精力都在完成公司图表库的<em>Server-side Rendering</em>，摆脱echarts投入d3的怀抱，旨在毫秒级的性能改善和预备以后反爬虫的可能性，不过性能表现的提升还得跟踪一段时间才能得到毕竟准确的结果。</p>
+<h3 id="Canvas和SVG的选择"><a href="#Canvas和SVG的选择" class="headerlink" title="Canvas和SVG的选择"></a>Canvas和SVG的选择</h3><p>Canvas似乎是现在的主流选择，Flipboard甚至不惜用Canvas代替DOM来改善交互，表现大家自有定论。但在服务器端渲染，Canvas不具备交互的条件，所以SVG是唯一的选择。</p>
+<h3 id="虚拟DOM的那些事儿"><a href="#虚拟DOM的那些事儿" class="headerlink" title="虚拟DOM的那些事儿"></a>虚拟DOM的那些事儿</h3><p>其实在服务器端渲染需要解决的一个最大的问题，便是<em>虚拟DOM</em>的操作了。虚拟DOM这个概念最近肯定是耳熟能详，为什么浏览器里需要一个虚拟DOM——还不是嫌DOM操作慢。而服务器端也面临同样的问题，有PhantomJS和JSDOM这样的完全模拟出浏览器环境进行DOM操作，但性能完全不能如意啊。<br>个人在做这个SVG服务器渲染的时候一开始是使用JSDOM（D3官方推荐），但渲染一个折线图（X轴50个点以内）大约需要80ms以上。这样的速度我们来进行SSR就是得不偿失了。所以我尝试了好几种方案：</p>
+<ul>
+<li>cheerio：性能非常好，但仅仅提供简单的DOM树形结构，但不包含任何DOM方法，无法对节点进行操作。</li>
+<li>minidom：提供了DOM2大部分方法，但仅限于HTML文档，缺少D3需要的createElementNS。</li>
+<li>xmldom：提供了DOM2大部分方法，性能能够满足要求。但缺少D3需要的Selectors API。<br>于是我给xmldom打了一个补丁，叫<a href="https://www.npmjs.com/package/xmldom-qsa" title="xmldom-qsa" target="_blank" rel="external">xmldom-qsa</a>，让其DOM节点包含querySelector等方法。这样就可以在服务器端完美地调用各种D3的API进行SVG绘图。粗略测试它的性能大概是JSDOM的4倍左右。<a id="more"></a>
+</li>
+</ul>
+<h3 id="JS-config和CSS-theme"><a href="#JS-config和CSS-theme" class="headerlink" title="JS config和CSS theme"></a>JS config和CSS theme</h3><p>在一个库里配置项总是最让我头疼的部分，配置项应该有什么，应该像什么。颜色主题是应该放CSS里还是放配置项里。在做package的时候反复验证了，最终样式还是交给CSS了，改起来容易啊。😊</p>
+<h4 id="Node端配置项"><a href="#Node端配置项" class="headerlink" title="Node端配置项"></a>Node端配置项</h4><p>配置项还是参考了echarts的基本结构。但因为主题配色几乎由CSS包办了，所以省去了体积庞大的<code>font-size</code>和<code>color</code>这类样式配置。可以专注于数据啦！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&#123;   </div><div class="line">    <span class="attr">xAxis</span>:</div><div class="line">        &#123; <span class="attr">type</span>: <span class="string">'time'</span>,</div><div class="line">        <span class="attr">data</span>:</div><div class="line">        [   <span class="number">20170524</span>,</div><div class="line">            <span class="number">20170525</span>,</div><div class="line">            ...]</div><div class="line">        &#125;,</div><div class="line">    <span class="attr">yAxis</span>:</div><div class="line">        &#123; <span class="attr">type</span>: <span class="string">'points'</span>,</div><div class="line">        <span class="attr">data</span>: [ <span class="number">123</span>, <span class="number">345</span>, ... ]&#125;,</div><div class="line">    <span class="attr">tooltip</span>: &#123; <span class="attr">pointIndex</span>: <span class="number">14</span> &#125;,</div><div class="line">    <span class="attr">series</span>:[</div><div class="line">        &#123;</div><div class="line">        <span class="attr">name</span>: <span class="string">'票房'</span>,<span class="comment">//not required, if you need legend you should give it to me </span></div><div class="line">        color: <span class="string">'#010101'</span>, <span class="comment">//not required </span></div><div class="line">        data:[</div><div class="line">        &#123; <span class="attr">yValue</span>: <span class="number">3160</span>,</div><div class="line">            <span class="attr">tooltip</span>: <span class="string">'2017-06-22 3160'</span>,</div><div class="line">            <span class="attr">xValue</span>: <span class="number">20170524</span> &#125;,</div><div class="line">        &#123; <span class="attr">yValue</span>: <span class="number">7556</span>,</div><div class="line">            <span class="attr">tooltip</span>: <span class="string">'2017-06-23 7556'</span>,</div><div class="line">            <span class="attr">xValue</span>: <span class="number">20170525</span> &#125;</div><div class="line">        ]&#125;,</div><div class="line">        &#123;<span class="attr">data</span>:[</div><div class="line">        &#123; <span class="attr">yValue</span>: <span class="number">60000</span>,</div><div class="line">            <span class="attr">tooltip</span>: <span class="string">'2017-06-22 6'</span>,</div><div class="line">            <span class="attr">xValue</span>: <span class="number">20170524</span> &#125;,</div><div class="line">        &#123; <span class="attr">yValue</span>: <span class="number">80000</span>,</div><div class="line">            <span class="attr">tooltip</span>: <span class="string">'2017-06-23 8'</span>,</div><div class="line">            <span class="attr">xValue</span>: <span class="number">20170525</span> &#125;</div><div class="line">        ]&#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样是不是很好，服务器就应该尽量只关心数据对吧。</p>
+<h4 id="浏览器内的交互"><a href="#浏览器内的交互" class="headerlink" title="浏览器内的交互"></a>浏览器内的交互</h4><p>当然，事件绑定还是需要浏览器来完成，所以也给出了比较简单的浏览器配置项。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//after import client/js/chart.js </span></div><div class="line"><span class="keyword">var</span> setting = &#123;</div><div class="line">    <span class="attr">type</span> : <span class="string">'line'</span>, <span class="comment">//type, required </span></div><div class="line">    tooltip : <span class="literal">true</span>, <span class="comment">//has tooltip </span></div><div class="line">    tooltipTrigger: <span class="literal">false</span>,<span class="comment">//show the tooltip when has it </span></div><div class="line">    callback: <span class="literal">undefined</span>,<span class="comment">//the callback function of click on item </span></div><div class="line">    moveTrigger: <span class="literal">true</span>,<span class="comment">//trigger callback when move in axis </span></div><div class="line">    defaultEvent: <span class="literal">true</span><span class="comment">//whether use defaute events on item </span></div><div class="line">&#125;</div><div class="line">myChart(<span class="built_in">document</span>.getElementById(<span class="string">'lineChart'</span>), setting);</div></pre></td></tr></table></figure></p>
+<p>配置项还是倾向于简洁明了，当然以后会继续改善，如果感兴趣，还是去看看<a href="https://www.npmjs.com/package/svg-ssr" title="svg-ssr" target="_blank" rel="external">文档</a>吧，欢迎指导。</p>
+<h3 id="未尽之响应和动画"><a href="#未尽之响应和动画" class="headerlink" title="未尽之响应和动画"></a>未尽之响应和动画</h3><p>响应式应该是现有Web UI库里的标配了，在服务器端不是很好做的原因是，无法即时得到客户端视窗的大小，而在客户端进行二次渲染的话耗费的资源又有点得不偿失，所以响应式做的不尽完善。<br>而动画也因为时间关系没有深究，实际上SVG动画是有比较大的潜力的，有大牛给过相应的例子——<a href="https://75team.com/post/svg-animation-in-action.html" target="_blank" rel="external">SVG动画实践</a>。<br>当然，SVG服务器渲染这套东西还没完全完成，后续肯定会改善响应性和大屏上的体验。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个月几乎全部精力都在完成公司图表库的&lt;em&gt;Server-side Rendering&lt;/em&gt;，摆脱echarts投入d3的怀抱，旨在毫秒级的性能改善和预备以后反爬虫的可能性，不过性能表现的提升还得跟踪一段时间才能得到毕竟准确的结果。&lt;/p&gt;
+&lt;h3 id=&quot;Canvas和SVG的选择&quot;&gt;&lt;a href=&quot;#Canvas和SVG的选择&quot; class=&quot;headerlink&quot; title=&quot;Canvas和SVG的选择&quot;&gt;&lt;/a&gt;Canvas和SVG的选择&lt;/h3&gt;&lt;p&gt;Canvas似乎是现在的主流选择，Flipboard甚至不惜用Canvas代替DOM来改善交互，表现大家自有定论。但在服务器端渲染，Canvas不具备交互的条件，所以SVG是唯一的选择。&lt;/p&gt;
+&lt;h3 id=&quot;虚拟DOM的那些事儿&quot;&gt;&lt;a href=&quot;#虚拟DOM的那些事儿&quot; class=&quot;headerlink&quot; title=&quot;虚拟DOM的那些事儿&quot;&gt;&lt;/a&gt;虚拟DOM的那些事儿&lt;/h3&gt;&lt;p&gt;其实在服务器端渲染需要解决的一个最大的问题，便是&lt;em&gt;虚拟DOM&lt;/em&gt;的操作了。虚拟DOM这个概念最近肯定是耳熟能详，为什么浏览器里需要一个虚拟DOM——还不是嫌DOM操作慢。而服务器端也面临同样的问题，有PhantomJS和JSDOM这样的完全模拟出浏览器环境进行DOM操作，但性能完全不能如意啊。&lt;br&gt;个人在做这个SVG服务器渲染的时候一开始是使用JSDOM（D3官方推荐），但渲染一个折线图（X轴50个点以内）大约需要80ms以上。这样的速度我们来进行SSR就是得不偿失了。所以我尝试了好几种方案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cheerio：性能非常好，但仅仅提供简单的DOM树形结构，但不包含任何DOM方法，无法对节点进行操作。&lt;/li&gt;
+&lt;li&gt;minidom：提供了DOM2大部分方法，但仅限于HTML文档，缺少D3需要的createElementNS。&lt;/li&gt;
+&lt;li&gt;xmldom：提供了DOM2大部分方法，性能能够满足要求。但缺少D3需要的Selectors API。&lt;br&gt;于是我给xmldom打了一个补丁，叫&lt;a href=&quot;https://www.npmjs.com/package/xmldom-qsa&quot; title=&quot;xmldom-qsa&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;xmldom-qsa&lt;/a&gt;，让其DOM节点包含querySelector等方法。这样就可以在服务器端完美地调用各种D3的API进行SVG绘图。粗略测试它的性能大概是JSDOM的4倍左右。
+    
+    </summary>
+    
+      <category term="Javascript" scheme="http://zeligzhou.github.io/categories/Javascript/"/>
+    
+    
+      <category term="SVG" scheme="http://zeligzhou.github.io/tags/SVG/"/>
+    
+      <category term="server-side" scheme="http://zeligzhou.github.io/tags/server-side/"/>
+    
+      <category term="render" scheme="http://zeligzhou.github.io/tags/render/"/>
+    
+  </entry>
   
   <entry>
     <title>事件循环</title>

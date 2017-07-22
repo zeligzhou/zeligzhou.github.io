@@ -57,6 +57,41 @@
     <header>
       
   
+    <h1 class="title"><a href="/2016/06/09/prototype-and-sth/">原型Prototype</a></h1>
+  
+
+      
+      <time datetime="2016-06-09T06:18:21.000Z">Jun 9 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p><code>prototype</code>应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？</p>
+<h3 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h3><p>如果<code>myObject</code>上不存在<code>a</code>属性时，我们就将注意力转向对象的<code>[[Prototype]]</code>链：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
+<p>这个处理持续进行，直到找到名称匹配的属性，或者<code>[[Prototype]]</code>链终结。如果在链条的末尾都没有找到匹配的属性，那么<code>[[Get]]</code>操作的返回结果为<code>undefined</code>。<br>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2016/06/09/prototype-and-sth/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2016/04/18/xhr2-in-use/">XHR2那些事儿</a></h1>
   
 
@@ -179,41 +214,6 @@
       <footer>
         <div class="alignleft">
           <a href="/2015/09/09/nodejs-spider/#more" class="more-link">阅读全文 &gt;</a>
-        </div>
-        <div class="clearfix"></div>
-      </footer>
-      
-    
-  </div>
-</article>
-
-
-
-
-<article class="post">
-  <div class="post-content">
-    <header>
-      
-  
-    <h1 class="title"><a href="/2015/07/22/about-fastclick/">关于FastClick</a></h1>
-  
-
-      
-      <time datetime="2015-07-22T11:42:25.000Z">Jul 22 2015</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p>由于移动端click事件的300ms延迟，很多人都选择了使用FastClick。但我在使用过程中遇到了一些问题。</p>
-<h3 id="覆盖了自己封装的tap事件"><a href="#覆盖了自己封装的tap事件" class="headerlink" title="覆盖了自己封装的tap事件"></a>覆盖了自己封装的tap事件</h3><p>解决方法是给该元素添加class——“needsclick”，官方给出了Bootstrap下的解决方案：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"dropdown-toggle needsclick"</span> <span class="attr">data-toggle</span>=<span class="string">"dropdown"</span>&gt;</span>Dropdown<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h3 id="AMD环境下引入失败"><a href="#AMD环境下引入失败" class="headerlink" title="AMD环境下引入失败"></a>AMD环境下引入失败</h3><p>比较严重的是在amd环境下，requirejs引入时候的bug。<br>
-      
-    </div>
-    
-      
-      <footer>
-        <div class="alignleft">
-          <a href="/2015/07/22/about-fastclick/#more" class="more-link">阅读全文 &gt;</a>
         </div>
         <div class="clearfix"></div>
       </footer>

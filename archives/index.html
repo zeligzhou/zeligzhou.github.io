@@ -57,6 +57,45 @@
     <header>
       
   
+    <h1 class="title"><a href="/2017/07/22/svg-ssr/">SVG服务器渲染</a></h1>
+  
+
+      
+      <time datetime="2017-07-22T09:35:21.000Z">Jul 22 2017</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>这个月几乎全部精力都在完成公司图表库的<em>Server-side Rendering</em>，摆脱echarts投入d3的怀抱，旨在毫秒级的性能改善和预备以后反爬虫的可能性，不过性能表现的提升还得跟踪一段时间才能得到毕竟准确的结果。</p>
+<h3 id="Canvas和SVG的选择"><a href="#Canvas和SVG的选择" class="headerlink" title="Canvas和SVG的选择"></a>Canvas和SVG的选择</h3><p>Canvas似乎是现在的主流选择，Flipboard甚至不惜用Canvas代替DOM来改善交互，表现大家自有定论。但在服务器端渲染，Canvas不具备交互的条件，所以SVG是唯一的选择。</p>
+<h3 id="虚拟DOM的那些事儿"><a href="#虚拟DOM的那些事儿" class="headerlink" title="虚拟DOM的那些事儿"></a>虚拟DOM的那些事儿</h3><p>其实在服务器端渲染需要解决的一个最大的问题，便是<em>虚拟DOM</em>的操作了。虚拟DOM这个概念最近肯定是耳熟能详，为什么浏览器里需要一个虚拟DOM——还不是嫌DOM操作慢。而服务器端也面临同样的问题，有PhantomJS和JSDOM这样的完全模拟出浏览器环境进行DOM操作，但性能完全不能如意啊。<br>个人在做这个SVG服务器渲染的时候一开始是使用JSDOM（D3官方推荐），但渲染一个折线图（X轴50个点以内）大约需要80ms以上。这样的速度我们来进行SSR就是得不偿失了。所以我尝试了好几种方案：</p>
+<ul>
+<li>cheerio：性能非常好，但仅仅提供简单的DOM树形结构，但不包含任何DOM方法，无法对节点进行操作。</li>
+<li>minidom：提供了DOM2大部分方法，但仅限于HTML文档，缺少D3需要的createElementNS。</li>
+<li>xmldom：提供了DOM2大部分方法，性能能够满足要求。但缺少D3需要的Selectors API。<br>于是我给xmldom打了一个补丁，叫<a href="https://www.npmjs.com/package/xmldom-qsa" title="xmldom-qsa" target="_blank" rel="external">xmldom-qsa</a>，让其DOM节点包含querySelector等方法。这样就可以在服务器端完美地调用各种D3的API进行SVG绘图。粗略测试它的性能大概是JSDOM的4倍左右。
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2017/07/22/svg-ssr/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2017/04/16/event-loop/">事件循环</a></h1>
   
 
@@ -192,41 +231,6 @@
       <footer>
         <div class="alignleft">
           <a href="/2016/08/13/vue-and-practice/#more" class="more-link">阅读全文 &gt;</a>
-        </div>
-        <div class="clearfix"></div>
-      </footer>
-      
-    
-  </div>
-</article>
-
-
-
-
-<article class="post">
-  <div class="post-content">
-    <header>
-      
-  
-    <h1 class="title"><a href="/2016/06/09/prototype-and-sth/">原型Prototype</a></h1>
-  
-
-      
-      <time datetime="2016-06-09T06:18:21.000Z">Jun 9 2016</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p><code>prototype</code>应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？</p>
-<h3 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h3><p>如果<code>myObject</code>上不存在<code>a</code>属性时，我们就将注意力转向对象的<code>[[Prototype]]</code>链：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
-<p>这个处理持续进行，直到找到名称匹配的属性，或者<code>[[Prototype]]</code>链终结。如果在链条的末尾都没有找到匹配的属性，那么<code>[[Get]]</code>操作的返回结果为<code>undefined</code>。<br>
-      
-    </div>
-    
-      
-      <footer>
-        <div class="alignleft">
-          <a href="/2016/06/09/prototype-and-sth/#more" class="more-link">阅读全文 &gt;</a>
         </div>
         <div class="clearfix"></div>
       </footer>

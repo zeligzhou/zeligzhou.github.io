@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › render</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">render</h2>
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2017/07/22/svg-ssr/">SVG服务器渲染</a></h1>
+  
+
+      
+      <time datetime="2017-07-22T09:35:21.000Z">Jul 22 2017</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>这个月几乎全部精力都在完成公司图表库的<em>Server-side Rendering</em>，摆脱echarts投入d3的怀抱，旨在毫秒级的性能改善和预备以后反爬虫的可能性，不过性能表现的提升还得跟踪一段时间才能得到毕竟准确的结果。</p>
+<h3 id="Canvas和SVG的选择"><a href="#Canvas和SVG的选择" class="headerlink" title="Canvas和SVG的选择"></a>Canvas和SVG的选择</h3><p>Canvas似乎是现在的主流选择，Flipboard甚至不惜用Canvas代替DOM来改善交互，表现大家自有定论。但在服务器端渲染，Canvas不具备交互的条件，所以SVG是唯一的选择。</p>
+<h3 id="虚拟DOM的那些事儿"><a href="#虚拟DOM的那些事儿" class="headerlink" title="虚拟DOM的那些事儿"></a>虚拟DOM的那些事儿</h3><p>其实在服务器端渲染需要解决的一个最大的问题，便是<em>虚拟DOM</em>的操作了。虚拟DOM这个概念最近肯定是耳熟能详，为什么浏览器里需要一个虚拟DOM——还不是嫌DOM操作慢。而服务器端也面临同样的问题，有PhantomJS和JSDOM这样的完全模拟出浏览器环境进行DOM操作，但性能完全不能如意啊。<br>个人在做这个SVG服务器渲染的时候一开始是使用JSDOM（D3官方推荐），但渲染一个折线图（X轴50个点以内）大约需要80ms以上。这样的速度我们来进行SSR就是得不偿失了。所以我尝试了好几种方案：</p>
+<ul>
+<li>cheerio：性能非常好，但仅仅提供简单的DOM树形结构，但不包含任何DOM方法，无法对节点进行操作。</li>
+<li>minidom：提供了DOM2大部分方法，但仅限于HTML文档，缺少D3需要的createElementNS。</li>
+<li>xmldom：提供了DOM2大部分方法，性能能够满足要求。但缺少D3需要的Selectors API。<br>于是我给xmldom打了一个补丁，叫<a href="https://www.npmjs.com/package/xmldom-qsa" title="xmldom-qsa" target="_blank" rel="external">xmldom-qsa</a>，让其DOM节点包含querySelector等方法。这样就可以在服务器端完美地调用各种D3的API进行SVG绘图。粗略测试它的性能大概是JSDOM的4倍左右。
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2017/07/22/svg-ssr/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<div class="pagination">
+  <table width='100%'>
+    <tbody>
+    <tr>
+      <td width='120' align='left'>
+        
+      </td>
+      <td width='auto' align='center'>
+          <a href="/archives/">文章归档</a>
+      </td>
+      <td width='120' align='right'>
+        
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
