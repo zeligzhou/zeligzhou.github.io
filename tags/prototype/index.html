@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › prototype</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">prototype</h2>
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2016/06/09/prototype-and-sth/">原型Prototype</a></h1>
+  
+
+      
+      <time datetime="2016-06-09T06:18:21.000Z">Jun 9 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p><code>prototype</code>应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？</p>
+<h3 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h3><p>如果<code>myObject</code>上不存在<code>a</code>属性时，我们就将注意力转向对象的<code>[[Prototype]]</code>链：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
+<p>这个处理持续进行，直到找到名称匹配的属性，或者<code>[[Prototype]]</code>链终结。如果在链条的末尾都没有找到匹配的属性，那么<code>[[Get]]</code>操作的返回结果为<code>undefined</code>。<br>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2016/06/09/prototype-and-sth/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<div class="pagination">
+  <table width='100%'>
+    <tbody>
+    <tr>
+      <td width='120' align='left'>
+        
+      </td>
+      <td width='auto' align='center'>
+          <a href="/archives/">文章归档</a>
+      </td>
+      <td width='120' align='right'>
+        
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

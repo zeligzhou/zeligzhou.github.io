@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Javascript</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Javascript</h2>
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2017/04/16/event-loop/">事件循环</a></h1>
+  
+
+      
+      <time datetime="2017-04-16T12:00:21.000Z">Apr 16 2017</time>
+      
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>我们知道JavaScript的一大特点就是单线程，而这个线程中拥有唯一的一个事件循环。JavaScript代码的执行过程中，除了依靠函数调用栈来搞定函数的执行顺序外，还依靠任务队列(task queue)来搞定另外一些代码的执行。</p>
+</blockquote>
+<h3 id="事件循环是什么"><a href="#事件循环是什么" class="headerlink" title="事件循环是什么"></a>事件循环是什么</h3><p>“任务队列”是一个事件的队列（也可以理解成消息的队列），IO设备完成一项任务，就在”任务队列”中添加一个事件，表示相关的异步任务可以进入”执行栈”了。主线程读取”任务队列”，就是读取里面有哪些事件。</p>
+<blockquote>
+<p>“任务队列”中的事件，除了IO设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入”任务队列”，等待主线程读取。</p>
+</blockquote>
+<p>主线程从”任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为Event Loop（事件循环）。<br>事件循环的过程就是等待一个消息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span>(queue.waitForMessage())&#123;</div><div class="line">  queue.processNextMessage();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在浏览器里，当一个事件出现且有一个事件监听器被绑定时，消息会被随时添加。如果没有事件监听器，事件会丢失。所以点击一个附带点击事件处理函数的元素会添加一个消息。</p>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2017/04/16/event-loop/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2017/01/06/design-pattern-of-js/">Javascript中的设计模式</a></h1>
+  
+
+      
+      <time datetime="2017-01-06T10:28:21.000Z">Jan 6 2017</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结。我们写代码总是会无意识的接触到别人的设计模式，例如每种语言都有自己的监听机制，这么看来其实设计模式从我们学编程起就一直伴随左右了。其实说到设计模式就离不开经验，当我们不断在一门语言里实践的过程中，总会用自己的理解组织代码。例如我每次重新写一个功能，都会总结哪里可以抽出来复用，哪里改动之后可以作为插件供其他人使用，这样就无意识的使用了一种设计模式。<br>使用设计模式都是为了让代码好维护，可读性更高，调用更合理。尤其是面向对象程序设计里，要遵循一些原则才具有良好的设计。</p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>面向对象程序设计有几个原则：单一职责原则 （Single Responsiblity Principle SRP）、里氏代换原则（Liskov Substitution Principle，LSP）、依赖倒转原则（Dependency Inversion Principle，DIP）、接口隔离原则（Interface Segregation Principle，ISP）、最小知识原则（Principle of Least Knowledge，PLK，也叫迪米特法则）、开闭原则（Open Closed Principle，OCP）。开闭原则具有理想主义的色彩，它是面向对象设计的终极目标。其他几条，则可以看做是开闭原则的实现方法。<br>我先简单介绍以下这几个原则的意思：</p>
+<ul>
+<li>单一职责原则：一个类只负责一项职责。在JS里即一个对象只做一件事情。</li>
+<li>里氏代换原则：类B继承类A时，除添加新的方法完成新增功能P2外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。</li>
+<li>依赖倒转原则：高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节；细节应该依赖抽象。</li>
+<li>接口隔离原则：客户端不应该依赖它不需要的接口；一个类对另一个类的依赖应该建立在最小的接口上。 </li>
+<li>最小知识原则：一个对象应该对其他对象保持最少的了解。也就是对象之间耦合度要小。</li>
+<li>开闭原则：一个软件实体如类、模块和函数应该可以扩展，但不可以修改。</li>
+</ul>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2017/01/06/design-pattern-of-js/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2016/11/26/webpack-in-use/">Webpack模块化</a></h1>
+  
+
+      
+      <time datetime="2016-11-26T07:46:21.000Z">Nov 26 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="Webpack模块化的实践"><a href="#Webpack模块化的实践" class="headerlink" title="Webpack模块化的实践"></a>Webpack模块化的实践</h2><p>Webpack 是德国开发者 Tobias Koppers 开发的模块加载器，在 Webpack 当中, 所有的资源都被当作是模块, js, css, 图片等等，对应各种不同文件类型的资源, Webpack 有对应的模块 loader，Webpack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。</p>
+<h3 id="一步一步来配置"><a href="#一步一步来配置" class="headerlink" title="一步一步来配置"></a>一步一步来配置</h3><p>它的配置文件是 webpack.config.js.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// webpack.config.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">bundle1</span>: <span class="string">'./main1.js'</span>,</div><div class="line">    <span class="attr">bundle2</span>: <span class="string">'./main2.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">filename</span>: <span class="string">'[name].js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2016/11/26/webpack-in-use/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2016/08/13/vue-and-practice/">Vue实践</a></h1>
+  
+
+      
+      <time datetime="2016-08-13T12:26:21.000Z">Aug 13 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="Vue和一些7788"><a href="#Vue和一些7788" class="headerlink" title="Vue和一些7788"></a>Vue和一些7788</h2><p>最近公司的朋友都很疑惑，前端这阵子真的是日新月异，我们还用着jquery，underscore和knockout这些“小玩具”好像步入了中年一样。没办法啊，现在的前端大兴土木搞组件，搞模块化，我们也得跟，不过老项目总有钉子户，不能一口啃下来，所以就出了一个兼容并包的demo。</p>
+<h3 id="简单的模板"><a href="#简单的模板" class="headerlink" title="简单的模板"></a>简单的模板</h3><p>初始化这些到处可以搜到的东西就不重复写了。<br>直接上手写组件。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'section1'</span>,&#123;</div><div class="line">  <span class="attr">template</span>:<span class="string">'&lt;section&gt;&lt;h2&gt;&#123;&#123;title&#125;&#125;&lt;/h2&gt;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&lt;/section&gt;'</span>,</div><div class="line">  <span class="attr">data</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">title</span>:<span class="string">'示例1：独立组件'</span>,</div><div class="line">      <span class="attr">message</span>:<span class="string">'data必须是function'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2016/08/13/vue-and-practice/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2016/06/09/prototype-and-sth/">原型Prototype</a></h1>
+  
+
+      
+      <time datetime="2016-06-09T06:18:21.000Z">Jun 9 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p><code>prototype</code>应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？</p>
+<h3 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h3><p>如果<code>myObject</code>上不存在<code>a</code>属性时，我们就将注意力转向对象的<code>[[Prototype]]</code>链：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
+<p>这个处理持续进行，直到找到名称匹配的属性，或者<code>[[Prototype]]</code>链终结。如果在链条的末尾都没有找到匹配的属性，那么<code>[[Get]]</code>操作的返回结果为<code>undefined</code>。<br>
+      
+    </div>
+    
+      
+      <footer>
+        <div class="alignleft">
+          <a href="/2016/06/09/prototype-and-sth/#more" class="more-link">阅读全文 &gt;</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      
+    
+  </div>
+</article>
+
+
+
+
+<div class="pagination">
+  <table width='100%'>
+    <tbody>
+    <tr>
+      <td width='120' align='left'>
+        
+      </td>
+      <td width='auto' align='center'>
+          <a href="/archives/">文章归档</a>
+      </td>
+      <td width='120' align='right'>
+        
+        <div class="alignright">
+          <a href="/categories/Javascript/page/2/" class="alignright next">Next ›</a>
+        </div>
+        
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

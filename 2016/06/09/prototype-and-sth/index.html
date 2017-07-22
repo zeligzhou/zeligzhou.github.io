@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › 原型Prototype</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="prototype应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？
+原型链是什么如果myObject上不存在a属性时，我们就将注意力转向对象的[[Prototype]]链：123456var anotherObject = &amp;#123;    a: 2&amp;#125;;// 创建一个链接到`anotherObject`的对象var myObject = Object.create( anotherObject );myObject.a; // 2
+这个处理持续进行，直到找到名称匹配的属性，或者[[Prototype]]链终结。如果在链条的末尾都没有找到匹配的属性，那么[[Get]]操作的返回结果为undefined。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="原型Prototype"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">原型Prototype</h1>
+  
+
+      
+      <time datetime="2016-06-09T06:18:21.000Z">Jun 9 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p><code>prototype</code>应该是Javascript里最核心的内容了。原型链继承的概念神马的估计都背熟了，但其实在应用中又该怎么玩呢？</p>
+<h3 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h3><p>如果<code>myObject</code>上不存在<code>a</code>属性时，我们就将注意力转向对象的<code>[[Prototype]]</code>链：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
+<p>这个处理持续进行，直到找到名称匹配的属性，或者<code>[[Prototype]]</code>链终结。如果在链条的末尾都没有找到匹配的属性，那么<code>[[Get]]</code>操作的返回结果为<code>undefined</code>。<br><a id="more"></a></p>
+<h3 id="原型链的屏蔽"><a href="#原型链的屏蔽" class="headerlink" title="原型链的屏蔽"></a>原型链的屏蔽</h3><p>而以下这个案例又说明了什么？<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 创建一个链接到`anotherObject`的对象</span></div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject );</div><div class="line">myObject.a; <span class="comment">// 2</span></div><div class="line">anotherObject.a = <span class="number">3</span>;</div><div class="line"><span class="built_in">console</span>.log(myObject.a);<span class="comment">//3 仍然通过[[Prototype]]查找到a</span></div><div class="line">myObject.a = <span class="number">4</span>;<span class="comment">//直接拥有了属性a，屏蔽[[Prototype]]</span></div><div class="line"><span class="built_in">console</span>.log(anotherObject.a);<span class="comment">//3 </span></div><div class="line">anotherObject.a = <span class="number">5</span>;</div><div class="line"><span class="built_in">console</span>.log(myObject.a);<span class="comment">//4 [[Prototype]]被屏蔽，直接读取自身属性a</span></div></pre></td></tr></table></figure></p>
+<p><code>[[Prototype]]</code>链怎么访问呢，现在浏览器提供了一个<code>.__proto__</code>属性来查找原型链。可以这么实现：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.defineProperty( <span class="built_in">Object</span>.prototype, <span class="string">"__proto__"</span>, &#123;</div><div class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.getPrototypeOf( <span class="keyword">this</span> );</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">o</span>) </span>&#123;</div><div class="line">        <span class="comment">// setPrototypeOf(..) as of ES6</span></div><div class="line">        <span class="built_in">Object</span>.setPrototypeOf( <span class="keyword">this</span>, o );</div><div class="line">        <span class="keyword">return</span> o;</div><div class="line">    &#125;</div><div class="line">&#125; );</div></pre></td></tr></table></figure></p>
+<p>其实，我们并不需要一堆<code>new</code>和<code>.prototype</code>就能很好的利用原型的特性来完成代码，直接使用对象的字面形式将拥有更简洁的语法和更好的可读性。</p>
+<h3 id="Object-create-和替补"><a href="#Object-create-和替补" class="headerlink" title="Object.create(..)和替补"></a><code>Object.create(..)</code>和替补</h3><p><code>Object.create(..)</code>在ES5中被加入。你可能需要支持ES5之前的环境：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!<span class="built_in">Object</span>.create) &#123;</div><div class="line">    <span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">o</span>) </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">        F.prototype = o;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>Object.create(..)</code>的这种用法是目前最常见的用法，因为他的这一部分是可以填补的。ES5标准的内建<code>Object.create(..)</code>还提供了一个附加的功能，它是 不能 被ES5之前的版本填补的。如此，这个功能的使用远没有那么常见。为了完整性，让我么看看这个附加功能：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherObject = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject, &#123;</div><div class="line">    <span class="attr">b</span>: &#123;</div><div class="line">        <span class="attr">enumerable</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">writable</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">configurable</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">value</span>: <span class="number">3</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">c</span>: &#123;</div><div class="line">        <span class="attr">enumerable</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">writable</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">configurable</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">value</span>: <span class="number">4</span></div><div class="line">    &#125;</div><div class="line">&#125; );</div><div class="line">myObject.hasOwnProperty( <span class="string">"a"</span> ); <span class="comment">// false</span></div><div class="line">myObject.hasOwnProperty( <span class="string">"b"</span> ); <span class="comment">// true</span></div><div class="line">myObject.hasOwnProperty( <span class="string">"c"</span> ); <span class="comment">// true</span></div><div class="line">myObject.a; <span class="comment">// 2</span></div><div class="line">myObject.b; <span class="comment">// 3</span></div><div class="line">myObject.c; <span class="comment">// 4</span></div></pre></td></tr></table></figure></p>
+<p>当然我们经常使用一些polyfill代码来实现并没有被广泛支持的新增功能，其中的可维护性和兼容性之间的取舍就看你自己啦。</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Javascript/">Javascript</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/prototype/">prototype</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

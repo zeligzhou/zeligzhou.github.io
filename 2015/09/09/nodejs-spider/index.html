@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Node.js实践</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="Node.js做一个爬虫一个临时的支线小任务，用node做一个爬虫，爬点贴吧的数据。
+Expressexpress 是 Node.js 应用最广泛的 web 框架），可以用来建立一个强大的服务器端应用，包括中间件，模板引擎，路由等强大功能。启动一个express最简单的服务代码如下：1234567891011121314151617// 这句的意思就是引入 `express` 模块，并将它赋予 `express` 这个变量等待使用。var express = require(&#39;express&#39;);// 调用 express 实例，它是一个函数，不带参数调用时，会返回一个 express 实例，将这个变量赋予 app 变量。var app = express();// app 本身有很多方法，其中包括最常用的 get、post、put/patch、delete，在这里我们调用其中的 get 方法，为我们的 `/` 路径指定一个 handler 函数。// 这个 handler 函数会接收 req 和 res 两个对象，他们分别是请求的 request 和 response。// request 中包含了浏览器传来的各种信息，比如 query 啊，body 啊，headers 啊之类的，都可以通过 req 对象访问到。// res 对象，我们一般不从里面取信息，而是通过它来定制我们向浏览器输出的信息，比如 header 信息，比如想要向浏览器输出的内容。这里我们调用了它的 #send 方法，向浏览器输出一个字符串。app.get(&#39;/&#39;, function (req, res) &amp;#123;  res.send(&#39;Hello World&#39;);&amp;#125;);// 定义好我们 app 的行为之后，让它监听本地的 3000 端口。这里的第二个函数是个回调函数，会在 listen 动作成功后执行，我们这里执行了一个命令行输出操作，告诉我们监听动作已完成。app.listen(3000, function () &amp;#123;  console.log(&#39;app is listening at port 3000&#39;);&amp;#125;);">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Node.js实践"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Node.js实践</h1>
+  
+
+      
+      <time datetime="2015-09-09T05:10:25.000Z">Sep 9 2015</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="Node-js做一个爬虫"><a href="#Node-js做一个爬虫" class="headerlink" title="Node.js做一个爬虫"></a>Node.js做一个爬虫</h2><p>一个临时的支线小任务，用node做一个爬虫，爬点贴吧的数据。</p>
+<h3 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h3><p>express 是 Node.js 应用最广泛的 web 框架），可以用来建立一个强大的服务器端应用，包括中间件，模板引擎，路由等强大功能。<br>启动一个express最简单的服务代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 这句的意思就是引入 `express` 模块，并将它赋予 `express` 这个变量等待使用。</span></div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="comment">// 调用 express 实例，它是一个函数，不带参数调用时，会返回一个 express 实例，将这个变量赋予 app 变量。</span></div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"></div><div class="line"><span class="comment">// app 本身有很多方法，其中包括最常用的 get、post、put/patch、delete，在这里我们调用其中的 get 方法，为我们的 `/` 路径指定一个 handler 函数。</span></div><div class="line"><span class="comment">// 这个 handler 函数会接收 req 和 res 两个对象，他们分别是请求的 request 和 response。</span></div><div class="line"><span class="comment">// request 中包含了浏览器传来的各种信息，比如 query 啊，body 啊，headers 啊之类的，都可以通过 req 对象访问到。</span></div><div class="line"><span class="comment">// res 对象，我们一般不从里面取信息，而是通过它来定制我们向浏览器输出的信息，比如 header 信息，比如想要向浏览器输出的内容。这里我们调用了它的 #send 方法，向浏览器输出一个字符串。</span></div><div class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'Hello World'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 定义好我们 app 的行为之后，让它监听本地的 3000 端口。这里的第二个函数是个回调函数，会在 listen 动作成功后执行，我们这里执行了一个命令行输出操作，告诉我们监听动作已完成。</span></div><div class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'app is listening at port 3000'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="CasperJS"><a href="#CasperJS" class="headerlink" title="CasperJS"></a>CasperJS</h3><p>CasperJS是一个开源的导航脚本处理和测试工具，基于PhantomJS（前端自动化测试工具）编写。CasperJS简化了完整的导航场景的过程定义，提供了用于完成常见任务的实用的高级函数、方法和语法。<br>启动一个casper服务代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> casper = <span class="built_in">require</span>(<span class="string">'casper'</span>).create(&#123;  </div><div class="line">    <span class="attr">verbose</span>: <span class="literal">true</span>,  </div><div class="line">    <span class="attr">logLevel</span>: <span class="string">'debug'</span>  </div><div class="line">&#125;);  </div><div class="line"></div><div class="line"><span class="comment">// start中可以什么都不写  </span></div><div class="line">casper.start();  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="comment">// 这句很重要,如果没有设置userAgent,则很多website会拒绝访问  </span></div><div class="line"><span class="keyword">var</span> userAgentString = <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X)'</span>;  </div><div class="line">casper.userAgent(userAgentString);</div></pre></td></tr></table></figure></p>
+<p>CasperJS打开一个页面后，会建立一个沙箱，沙箱就相当于浏览器啦，可以使用浏览器文档对象的一些方法拿到想要的信息。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 遍历列表  </span></div><div class="line">    <span class="keyword">this</span>.thenOpen(opts.url,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="keyword">var</span> res = <span class="keyword">this</span>.evaluate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">            <span class="comment">// 沙箱里面不能用_,只能用for,因为_不能传入沙箱  </span></div><div class="line">            <span class="keyword">var</span> aString = <span class="string">"a.j_th_tit"</span>;  </div><div class="line">            <span class="keyword">var</span> rst = [];  </div><div class="line">            <span class="keyword">var</span> nodeList =  <span class="built_in">document</span>.querySelectorAll(aString);  </div><div class="line">            <span class="keyword">var</span> nxtString = <span class="string">".pagination-item.next"</span>;</div><div class="line">            <span class="keyword">var</span> nxt =  <span class="built_in">document</span>.querySelector(nxtString).getAttribute(<span class="string">"href"</span>); </div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nodeList.length; i++) &#123;  </div><div class="line">                <span class="keyword">var</span> node = nodeList[i];  </div><div class="line">                <span class="keyword">var</span> title = node.innerHTML;  </div><div class="line">                <span class="keyword">var</span> url = node.getAttribute(<span class="string">"href"</span>);  </div><div class="line">                <span class="keyword">if</span>(url.indexOf(<span class="string">"http://"</span>)==<span class="number">-1</span>)&#123;  </div><div class="line">                    url = location.origin+url;  </div><div class="line">                &#125;  </div><div class="line">                rst.push(&#123;<span class="attr">title</span>:title,<span class="attr">url</span>:url&#125;);  </div><div class="line">            &#125;;  </div><div class="line">            <span class="keyword">return</span> &#123;<span class="attr">rst</span>:rst,<span class="attr">nxt</span>:nxt&#125;;  </div><div class="line">        &#125;);  </div><div class="line">        list = res.rst;</div><div class="line">        nextP = res.nxt;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
+<p>完整demo见<a href="https://github.com/zeligzhou/spider" target="_blank" rel="external">我的spider</a>。</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Javascript/">Javascript</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/NodeJS/">NodeJS</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/CasperJs/">CasperJs</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Javascript中的设计模式</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结。我们写代码总是会无意识的接触到别人的设计模式，例如每种语言都有自己的监听机制，这么看来其实设计模式从我们学编程起就一直伴随左右了。其实说到设计模式就离不开经验，当我们不断在一门语言里实践的过程中，总会用自己的理解组织代码。例如我每次重新写一个功能，都会总结哪里可以抽出来复用，哪里改动之后可以作为插件供其他人使用，这样就无意识的使用了一种设计模式。使用设计模式都是为了让代码好维护，可读性更高，调用更合理。尤其是面向对象程序设计里，要遵循一些原则才具有良好的设计。
+设计原则面向对象程序设计有几个原则：单一职责原则 （Single Responsiblity Principle SRP）、里氏代换原则（Liskov Substitution Principle，LSP）、依赖倒转原则（Dependency Inversion Principle，DIP）、接口隔离原则（Interface Segregation Principle，ISP）、最小知识原则（Principle of Least Knowledge，PLK，也叫迪米特法则）、开闭原则（Open Closed Principle，OCP）。开闭原则具有理想主义的色彩，它是面向对象设计的终极目标。其他几条，则可以看做是开闭原则的实现方法。我先简单介绍以下这几个原则的意思：
+
+单一职责原则：一个类只负责一项职责。在JS里即一个对象只做一件事情。
+里氏代换原则：类B继承类A时，除添加新的方法完成新增功能P2外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。
+依赖倒转原则：高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节；细节应该依赖抽象。
+接口隔离原则：客户端不应该依赖它不需要的接口；一个类对另一个类的依赖应该建立在最小的接口上。 
+最小知识原则：一个对象应该对其他对象保持最少的了解。也就是对象之间耦合度要小。
+开闭原则：一个软件实体如类、模块和函数应该可以扩展，但不可以修改。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Javascript中的设计模式"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Javascript中的设计模式</h1>
+  
+
+      
+      <time datetime="2017-01-06T10:28:21.000Z">Jan 6 2017</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>设计模式（Design Pattern）是一套被反复使用、多数人知晓的、经过分类的、代码设计经验的总结。我们写代码总是会无意识的接触到别人的设计模式，例如每种语言都有自己的监听机制，这么看来其实设计模式从我们学编程起就一直伴随左右了。其实说到设计模式就离不开经验，当我们不断在一门语言里实践的过程中，总会用自己的理解组织代码。例如我每次重新写一个功能，都会总结哪里可以抽出来复用，哪里改动之后可以作为插件供其他人使用，这样就无意识的使用了一种设计模式。<br>使用设计模式都是为了让代码好维护，可读性更高，调用更合理。尤其是面向对象程序设计里，要遵循一些原则才具有良好的设计。</p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>面向对象程序设计有几个原则：单一职责原则 （Single Responsiblity Principle SRP）、里氏代换原则（Liskov Substitution Principle，LSP）、依赖倒转原则（Dependency Inversion Principle，DIP）、接口隔离原则（Interface Segregation Principle，ISP）、最小知识原则（Principle of Least Knowledge，PLK，也叫迪米特法则）、开闭原则（Open Closed Principle，OCP）。开闭原则具有理想主义的色彩，它是面向对象设计的终极目标。其他几条，则可以看做是开闭原则的实现方法。<br>我先简单介绍以下这几个原则的意思：</p>
+<ul>
+<li>单一职责原则：一个类只负责一项职责。在JS里即一个对象只做一件事情。</li>
+<li>里氏代换原则：类B继承类A时，除添加新的方法完成新增功能P2外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。</li>
+<li>依赖倒转原则：高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节；细节应该依赖抽象。</li>
+<li>接口隔离原则：客户端不应该依赖它不需要的接口；一个类对另一个类的依赖应该建立在最小的接口上。 </li>
+<li>最小知识原则：一个对象应该对其他对象保持最少的了解。也就是对象之间耦合度要小。</li>
+<li>开闭原则：一个软件实体如类、模块和函数应该可以扩展，但不可以修改。</li>
+</ul>
+<a id="more"></a>
+<p>接下来看看我们常用的设计模式是怎么实现这些原则的。</p>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>这个在实践中真的是随处可见。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dom.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ...code... &#125;,<span class="literal">false</span>); <span class="comment">//订阅</span></div><div class="line">dom.click(); <span class="comment">//发布</span></div></pre></td></tr></table></figure></p>
+<p>用的不能再多了吧，这个设计有什么好处呢？<br>假若，我们点击不同的DOM节点要触发一些事件，而事件和节点之间本身无关联，我们需要灵活的进行订阅和取消。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback1</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback2</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback3</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">dom1.addEventListener(<span class="string">"click"</span>,callback1,<span class="literal">false</span>);</div><div class="line">dom1.addEventListener(<span class="string">"click"</span>,callback3,<span class="literal">false</span>);</div><div class="line">dom2.addEventListener(<span class="string">"click"</span>,callback2,<span class="literal">false</span>);</div><div class="line">dom2.addEventListener(<span class="string">"click"</span>,callback3,<span class="literal">false</span>);</div><div class="line">dom1.click();</div><div class="line">dom2.click();</div></pre></td></tr></table></figure></p>
+<p><code>dom1</code>并不需要关心<code>dom2</code>订阅过什么，<code>dom1</code>也不需要关心<code>dom1</code>之前订阅过什么，这样的模式在开发中优势就很明显了。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>表单验证写过不少吧。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> ( registerForm.userName.value === <span class="string">''</span> )&#123;</div><div class="line">        alert ( <span class="string">'用户名不能为空'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( registerForm.password.value.length &lt; <span class="number">6</span> )&#123;</div><div class="line">        alert ( <span class="string">'密码长度不能少于6 位'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( !<span class="regexp">/(^1[3|5|8][0-9]&#123;9&#125;$)/</span>.test( registerForm.phoneNumber.value ) )&#123;</div><div class="line">        alert ( <span class="string">'手机号码格式不正确'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>怎么样，现在还能看，但是当表单有100个input要一一验证怎么破？这样的话我们其实会调用一些组件库，像我正在用的组件库里其实有很多这样的判断字典：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> strategies = &#123;</div><div class="line">    <span class="attr">isNonEmpty</span>: <span class="function"><span class="keyword">function</span>(<span class="params"> value, errorMsg </span>)</span>&#123; <span class="comment">// 不为空</span></div><div class="line">        <span class="keyword">if</span> ( value === <span class="string">''</span> )&#123;</div><div class="line">            <span class="keyword">return</span> errorMsg ;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">minLength</span>: <span class="function"><span class="keyword">function</span>(<span class="params"> value, length, errorMsg </span>)</span>&#123; <span class="comment">// 限制最小长度</span></div><div class="line">        <span class="keyword">if</span> ( value.length &lt; length )&#123;</div><div class="line">            <span class="keyword">return</span> errorMsg;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">isMobile</span>: <span class="function"><span class="keyword">function</span>(<span class="params"> value, errorMsg </span>)</span>&#123; <span class="comment">// 手机号码格式</span></div><div class="line">        <span class="keyword">if</span> ( !<span class="regexp">/(^1[3|5|8][0-9]&#123;9&#125;$)/</span>.test( value ) )&#123;</div><div class="line">            <span class="keyword">return</span> errorMsg;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>然后在webapp中我们只需要向一个验证方法添加所需要的策略：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> validataFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="keyword">var</span> validator = <span class="keyword">new</span> Validator(); <span class="comment">// 创建一个validator 对象，代码略</span></div><div class="line"><span class="comment">/***************添加一些校验规则****************/</span></div><div class="line">validator.add( registerForm.userName, <span class="string">'isNonEmpty'</span>, <span class="string">'用户名不能为空'</span> );</div><div class="line">validator.add( registerForm.password, <span class="string">'minLength:6'</span>, <span class="string">'密码长度不能少于6 位'</span> );</div><div class="line">validator.add( registerForm.phoneNumber, <span class="string">'isMobile'</span>, <span class="string">'手机号码格式不正确'</span> );</div><div class="line"><span class="keyword">var</span> errorMsg = validator.start(); <span class="comment">// 获得校验结果</span></div><div class="line">    <span class="keyword">return</span> errorMsg; <span class="comment">// 返回校验结果</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById( <span class="string">'registerForm'</span> );</div><div class="line">registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> errorMsg = validataFunc(); <span class="comment">// 如果errorMsg 有确切的返回值，说明未通过校验</span></div><div class="line">    <span class="keyword">if</span> ( errorMsg )&#123;</div><div class="line">        alert ( errorMsg );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 阻止表单提交</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><p>还是表单验证，这是我们提交表单时的代码，怎么样，又有表单验证，又有ajax请求，符合单一职责原则吗？<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> ( registerForm.userName.value === <span class="string">''</span> )&#123;</div><div class="line">        alert ( <span class="string">'用户名不能为空'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( registerForm.password.value.length &lt; <span class="number">6</span> )&#123;</div><div class="line">        alert ( <span class="string">'密码长度不能少于6 位'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( !<span class="regexp">/(^1[3|5|8][0-9]&#123;9&#125;$)/</span>.test( registerForm.phoneNumber.value ) )&#123;</div><div class="line">        alert ( <span class="string">'手机号码格式不正确'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    ajax(url,param);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然，我们可以用钩子来优化代码，但随着功能的扩展，也可能出现<code>if/else</code>交替增加，又变成了噩梦。<br>那么我们可以用装饰者模式解决。</p>
+<blockquote>
+<p>装饰者模式能够在不改变对象自身的基础上，在程序运行期间给对象动态地添加职责。跟继承相比，装饰者是一种更轻便灵活的做法，这是一种“即用即付”的方式，比如天冷了就多穿一件外套，需要飞行时就在头上插一支竹蜻蜓，遇到一堆食尸鬼时就点开AOE（范围攻击）技能。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params"> beforefn </span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> __self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span> ( beforefn.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> ) === <span class="literal">false</span> )&#123;</div><div class="line">            <span class="comment">// beforefn 返回false 的情况直接return，不再执行后面的原函数</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> __self.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> validata = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> ( username.value === <span class="string">''</span> )&#123;</div><div class="line">        alert ( <span class="string">'用户名不能为空'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( password.value === <span class="string">''</span> )&#123;</div><div class="line">        alert ( <span class="string">'密码不能为空'</span> );</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> formSubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> param = &#123;</div><div class="line">        <span class="attr">username</span>: username.value,</div><div class="line">        <span class="attr">password</span>: password.value</div><div class="line">    &#125;</div><div class="line">    ajax( <span class="string">'http:// xxx.com/login'</span>, param );</div><div class="line">&#125;</div><div class="line">formSubmit = formSubmit.before( validata );</div><div class="line">submitBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    formSubmit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实ES6新增的Promise就算是一个装饰者，不过它是后置装饰，形成了一个异步的包装链。<br>设计模式还有很多说不完的东西，边实践边总结吧。</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Javascript/">Javascript</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/设计模式/">设计模式</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

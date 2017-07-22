@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Amazing CSS</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="一些牛逼哄哄的CSS的玩法。
+设置选中文字的背景色。现在选中后为马卡龙绿色。12345::selection &amp;#123;    background: #DB4F33;    color: white;    text-shadow: none;&amp;#125;">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Amazing CSS"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Amazing CSS</h1>
+  
+
+      
+      <time datetime="2015-03-26T02:23:45.000Z">Mar 26 2015</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>一些牛逼哄哄的CSS的玩法。</p>
+<h3 id="设置选中文字的背景色。现在选中后为马卡龙绿色。"><a href="#设置选中文字的背景色。现在选中后为马卡龙绿色。" class="headerlink" title="设置选中文字的背景色。现在选中后为马卡龙绿色。"></a>设置选中文字的背景色。现在选中后为马卡龙绿色。</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-pseudo">::selection</span> &#123;</div><div class="line">    <span class="attribute">background</span>: <span class="number">#DB4F33</span>;</div><div class="line">    <span class="attribute">color</span>: white;</div><div class="line">    <span class="attribute">text-shadow</span>: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="webkit-perspective可以用来设置透视的度数，呈现3D立体感。"><a href="#webkit-perspective可以用来设置透视的度数，呈现3D立体感。" class="headerlink" title="-webkit-perspective可以用来设置透视的度数，呈现3D立体感。"></a>-webkit-perspective可以用来设置透视的度数，呈现3D立体感。</h3><p>origin为透视原点（底部位置）。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.cls</span>&#123;</div><div class="line">  <span class="attribute">-webkit-perspective</span>: <span class="number">800</span>;</div><div class="line">  <span class="attribute">-webkit-perspective-origin</span>: <span class="number">50%</span> <span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>perspective的最佳大小为显示器宽像素*（人眼距显示器距离/显示器宽度）。<br>当translateZ极限接近perspective值的时候，元素会占满整个屏幕。<br>在3D的世界里，rotate是沿着中轴线旋转的（此时另两个坐标的轴线一起转移），translate是沿着轴方向位移。<br>当元素是一个边长为200px的正方体。每个面都在旋转后z位移100px（因为是沿重点转），就能组成一个立方体。<br>这是我的<a href="http://keyof.me/" target="_blank" rel="external">demo</a>。<br>此外，perspective应用在“舞台”和“元素”二者身上的表现是不同的。见<a href="http://www.zhangxinxu.com/study/201209/transform-perspective-same-rotate.html" target="_blank" rel="external">大牛的demo</a>。</p>
+<h3 id="box-shadow是个很神奇的东西，同border和background这类一起应用好直接能画图。"><a href="#box-shadow是个很神奇的东西，同border和background这类一起应用好直接能画图。" class="headerlink" title="box-shadow是个很神奇的东西，同border和background这类一起应用好直接能画图。"></a>box-shadow是个很神奇的东西，同border和background这类一起应用好直接能画图。</h3><p>见<a href="http://lynnandtonic.github.io/a-single-div/" target="_blank" rel="external">大牛的一个把box-shadow发挥到极致的网站</a>。<br>你可以试试这么写border出来分别是什么东东。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.triangle</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">0px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">0px</span>;</div><div class="line">  <span class="attribute">border</span>:<span class="number">100px</span> solid;</div><div class="line">  <span class="comment">/*  Add color now */</span></div><div class="line">  <span class="attribute">border-color</span>: pink green yellow purple;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.triangle2</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">0px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">0px</span>;</div><div class="line">  <span class="attribute">border</span>:<span class="number">100px</span> solid;</div><div class="line">  <span class="attribute">border-color</span>: transparent transparent <span class="number">#DB4F33</span> transparent;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="自定义字体："><a href="#自定义字体：" class="headerlink" title="自定义字体："></a>自定义字体：</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">font-face</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: <span class="string">'MyWebFont'</span>;</div><div class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'webfont.eot'</span>); <span class="comment">/* IE9 Compat Modes */</span></div><div class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'webfont.eot?#iefix'</span>) <span class="built_in">format</span>(<span class="string">'embedded-opentype'</span>), <span class="comment">/* IE6-IE8 */</span></div><div class="line">       <span class="built_in">url</span>(<span class="string">'webfont.woff'</span>) <span class="built_in">format</span>(<span class="string">'woff'</span>), <span class="comment">/* Modern Browsers */</span></div><div class="line">       <span class="built_in">url</span>(<span class="string">'webfont.ttf'</span>)  <span class="built_in">format</span>(<span class="string">'truetype'</span>), <span class="comment">/* Safari, Android, iOS */</span></div><div class="line">       <span class="built_in">url</span>(<span class="string">'webfont.svg#svgFontName'</span>) <span class="built_in">format</span>(<span class="string">'svg'</span>); <span class="comment">/* Legacy iOS */</span></div><div class="line">&#125;</div><div class="line"><span class="comment">/* 这么调用 */</span></div><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: <span class="string">'MyWebFont'</span>, Fallback, sans-serif;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="剪裁路径clip-path"><a href="#剪裁路径clip-path" class="headerlink" title="剪裁路径clip-path"></a>剪裁路径clip-path</h3><p>来看看<a href="http://runjs.cn/code/ijpkosqw" target="_blank" rel="external">这个</a>。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span>&#123;</div><div class="line">  <span class="attribute">display</span>:block;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">115.625vw</span>;</div><div class="line">  <span class="attribute">-webkit-clip-path</span>: <span class="built_in">polygon</span>(0 0, 100% 50%, 0 100%);</div><div class="line">  <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(0 0, 100% 50%, 0 100%);</div><div class="line">  <span class="attribute">background</span>:<span class="number">#f00</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>有时候美术就是会有一些棒棒的设计，比如说三角形的选块，这在传统意义上的盒模型里是不好实现的，好在有CSS和SVG这种神一般的存在。<br>clip-path除了作为clip的替身，还是SVG clip-path属性的延伸。想要了解更多见<a href="http://www.zhangxinxu.com/wordpress/2014/12/css3-svg-clip-path/" target="_blank" rel="external">大牛的demo中的解析</a>。</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/CSS/">CSS</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/CSS3/">CSS3</a>, <a href="/tags/HTML5/">HTML5</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

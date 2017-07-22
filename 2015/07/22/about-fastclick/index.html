@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › 关于FastClick</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="由于移动端click事件的300ms延迟，很多人都选择了使用FastClick。但我在使用过程中遇到了一些问题。
+覆盖了自己封装的tap事件解决方法是给该元素添加class——“needsclick”，官方给出了Bootstrap下的解决方案：1&amp;lt;a class=&quot;dropdown-toggle needsclick&quot; data-toggle=&quot;dropdown&quot;&amp;gt;Dropdown&amp;lt;/a&amp;gt;
+AMD环境下引入失败比较严重的是在amd环境下，requirejs引入时候的bug。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="关于FastClick"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">关于FastClick</h1>
+  
+
+      
+      <time datetime="2015-07-22T11:42:25.000Z">Jul 22 2015</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>由于移动端click事件的300ms延迟，很多人都选择了使用FastClick。但我在使用过程中遇到了一些问题。</p>
+<h3 id="覆盖了自己封装的tap事件"><a href="#覆盖了自己封装的tap事件" class="headerlink" title="覆盖了自己封装的tap事件"></a>覆盖了自己封装的tap事件</h3><p>解决方法是给该元素添加class——“needsclick”，官方给出了Bootstrap下的解决方案：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"dropdown-toggle needsclick"</span> <span class="attr">data-toggle</span>=<span class="string">"dropdown"</span>&gt;</span>Dropdown<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="AMD环境下引入失败"><a href="#AMD环境下引入失败" class="headerlink" title="AMD环境下引入失败"></a>AMD环境下引入失败</h3><p>比较严重的是在amd环境下，requirejs引入时候的bug。<br><a id="more"></a><br>源码是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AMD. Register as an anonymous module.</span></div><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> FastClick;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>显然不合规范，导致引入后作用域内未定义。<br>但修改为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AMD. Register as an anonymous module.</span></div><div class="line">define(FastClick);</div></pre></td></tr></table></figure></p>
+<p>又会在检测浏览器时报错：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// IE10 with -ms-touch-action: none or manipulation, which disables double-tap-to-zoom (issue #97)</span></div><div class="line"><span class="keyword">if</span> (layer.style.msTouchAction === <span class="string">'none'</span> || layer.style.touchAction === <span class="string">'manipulation'</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后无奈，只好把amd环境下的定义去掉了。</p>
+<p>Game over~</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Javascript/">Javascript</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/FastClick/">FastClick</a>, <a href="/tags/amd/">amd</a>, <a href="/tags/requirejs/">requirejs</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

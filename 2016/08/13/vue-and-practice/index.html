@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Vue实践</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="Vue和一些7788最近公司的朋友都很疑惑，前端这阵子真的是日新月异，我们还用着jquery，underscore和knockout这些“小玩具”好像步入了中年一样。没办法啊，现在的前端大兴土木搞组件，搞模块化，我们也得跟，不过老项目总有钉子户，不能一口啃下来，所以就出了一个兼容并包的demo。
+简单的模板初始化这些到处可以搜到的东西就不重复写了。直接上手写组件。123456789Vue.component(&#39;section1&#39;,&amp;#123;  template:&#39;&amp;lt;section&amp;gt;&amp;lt;h2&amp;gt;&amp;#123;&amp;#123;title&amp;#125;&amp;#125;&amp;lt;/h2&amp;gt;&amp;lt;div&amp;gt;&amp;#123;&amp;#123;message&amp;#125;&amp;#125;&amp;lt;/div&amp;gt;&amp;lt;/section&amp;gt;&#39;,  data:function()&amp;#123;    return &amp;#123;      title:&#39;示例1：独立组件&#39;,      message:&#39;data必须是function&#39;    &amp;#125;  &amp;#125;&amp;#125;);">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Vue实践"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Vue实践</h1>
+  
+
+      
+      <time datetime="2016-08-13T12:26:21.000Z">Aug 13 2016</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="Vue和一些7788"><a href="#Vue和一些7788" class="headerlink" title="Vue和一些7788"></a>Vue和一些7788</h2><p>最近公司的朋友都很疑惑，前端这阵子真的是日新月异，我们还用着jquery，underscore和knockout这些“小玩具”好像步入了中年一样。没办法啊，现在的前端大兴土木搞组件，搞模块化，我们也得跟，不过老项目总有钉子户，不能一口啃下来，所以就出了一个兼容并包的demo。</p>
+<h3 id="简单的模板"><a href="#简单的模板" class="headerlink" title="简单的模板"></a>简单的模板</h3><p>初始化这些到处可以搜到的东西就不重复写了。<br>直接上手写组件。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'section1'</span>,&#123;</div><div class="line">  <span class="attr">template</span>:<span class="string">'&lt;section&gt;&lt;h2&gt;&#123;&#123;title&#125;&#125;&lt;/h2&gt;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&lt;/section&gt;'</span>,</div><div class="line">  <span class="attr">data</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">title</span>:<span class="string">'示例1：独立组件'</span>,</div><div class="line">      <span class="attr">message</span>:<span class="string">'data必须是function'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="循环模板"><a href="#循环模板" class="headerlink" title="循环模板"></a>循环模板</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"card_frame"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span></span></div><div class="line">      <span class="attr">is</span>=<span class="string">"card-item"</span></div><div class="line">      <span class="attr">v-for</span>=<span class="string">"(card, index) in cards"</span></div><div class="line">      <span class="attr">v-bind:title</span>=<span class="string">"card.text"</span></div><div class="line">    &gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'card-item'</span>,&#123;</div><div class="line">  <span class="attr">template</span>:<span class="string">'&lt;li&gt;&#123;&#123;title&#125;&#125;&lt;/li&gt;'</span>,</div><div class="line">  <span class="attr">props</span>:[<span class="string">'title'</span>]</div><div class="line">&#125;);</div><div class="line"><span class="comment">//初始化data</span></div><div class="line"><span class="keyword">var</span> app =  <span class="keyword">new</span> Vue(&#123;</div><div class="line">    <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">    <span class="attr">data</span>: &#123;</div><div class="line">      <span class="attr">title</span>:<span class="string">"Vue Demo"</span>,</div><div class="line">      <span class="attr">message</span>:<span class="string">"Vue常用功能示例"</span>,</div><div class="line">      <span class="attr">cards</span>:[</div><div class="line">        &#123;<span class="attr">text</span>:<span class="string">'card1'</span>&#125;,</div><div class="line">        &#123;<span class="attr">text</span>:<span class="string">'card2'</span>&#125;,</div><div class="line">        &#123;<span class="attr">text</span>:<span class="string">'card3'</span>&#125;</div><div class="line">      ],</div><div class="line">...</div></pre></td></tr></table></figure>
+<h3 id="事件绑定模板"><a href="#事件绑定模板" class="headerlink" title="事件绑定模板"></a>事件绑定模板</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"card_frame"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span></span></div><div class="line">      <span class="attr">is</span>=<span class="string">"card-item2"</span></div><div class="line">      <span class="attr">v-for</span>=<span class="string">"(card, index) in cards"</span></div><div class="line">      <span class="attr">v-bind:title</span>=<span class="string">"card.text"</span></div><div class="line">      </div><div class="line">    &gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'card-item2'</span>,&#123;</div><div class="line">  <span class="attr">template</span>:<span class="string">'&lt;li v-on:click="hideText($event)"&gt;&#123;&#123;title&#125;&#125;&lt;/li&gt;'</span>,</div><div class="line">  <span class="attr">props</span>:[<span class="string">'title'</span>],</div><div class="line">  <span class="attr">methods</span>:&#123;</div><div class="line">    <span class="attr">hideText</span>:<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">      e.target.style.display = <span class="string">"none"</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="引用外部插件"><a href="#引用外部插件" class="headerlink" title="引用外部插件"></a>引用外部插件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery.dragsort-0.5.1.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mounted:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"组件挂载后，目标li的数量为："</span>+$(<span class="string">"#list1 li"</span>).length);</div><div class="line">  $(<span class="string">"#list1, #list2"</span>).dragsort(&#123; <span class="attr">dragSelector</span>: <span class="string">"li"</span>, <span class="attr">dragBetween</span>: <span class="literal">true</span>, <span class="attr">dragEnd</span>: saveOrder  &#125;);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">saveOrder</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">"调用拖动事件后，目标li的数量为："</span>+$(<span class="string">"#list1 li"</span>).length);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Ajax请求"><a href="#Ajax请求" class="headerlink" title="Ajax请求"></a>Ajax请求</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">section5</span> <span class="attr">v-bind:weather</span>=<span class="string">"ajaxData"</span>&gt;</span><span class="tag">&lt;/<span class="name">section5</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'section5'</span>,&#123;</div><div class="line">  <span class="attr">template</span>:<span class="string">'&lt;section&gt;&lt;h2&gt;&#123;&#123;title&#125;&#125;&lt;/h2&gt;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&lt;div&gt;当前天气：&#123;&#123;weather&#125;&#125;&lt;/div&gt;&lt;/section&gt;'</span>,</div><div class="line">  <span class="attr">data</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">title</span>:<span class="string">'示例5：AJAX获取数据'</span>,</div><div class="line">      <span class="attr">message</span>:<span class="string">'异步数据的展示'</span></div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">props</span>:[<span class="string">'weather'</span>]</div><div class="line">&#125;);</div><div class="line"><span class="comment">//app实例化方法中</span></div><div class="line">...</div><div class="line">created:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">"实例创建后，ajaxData为："</span>+<span class="keyword">this</span>.ajaxData);</div><div class="line">      <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">      $.ajax(&#123;</div><div class="line">       <span class="attr">url</span>: <span class="string">"http://api.k780.com:88/?app=weather.today&amp;weaid=1&amp;appkey=10003&amp;sign=b59bc3ef6191eb9f747dd4e83c99f2a4&amp;format=json&amp;jsoncallback=?"</span>,</div><div class="line">        <span class="attr">dataType</span>: <span class="string">"jsonp"</span>,</div><div class="line">          <span class="attr">type</span>:<span class="string">"Post"</span>,</div><div class="line">         <span class="attr">jsonpCallback</span>: <span class="string">"jsonpCallback"</span>,</div><div class="line">        <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">            self.ajaxData = data.result.temperature;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"请求完成后，ajaxData为："</span>+self.ajaxData);</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">"实例创建后，目标li的数量为："</span>+$(<span class="string">"#list1 li"</span>).length);</div><div class="line">    &#125;,</div><div class="line">...</div></pre></td></tr></table></figure>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>想当初，我刚做前端的时候，全世界都在说内容表现行为要分离。现在的webapp，大框架，模块化，恨不得JS搞定一切，想来也是唏嘘，不过每个时代总有局限性，只要能适应以后的发展就跟着走吧。</p>
+<p>完整demo见<a href="https://github.com/zeligzhou/boom" target="_blank" rel="external">boom</a>。</p>
+
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Javascript/">Javascript</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/Vue-js/">Vue.js</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

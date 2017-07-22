@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Z World › Debut</title>
+  <meta name="author" content="Zelig Zhou">
+  
+  <meta name="description" content="基本的Git指令从github下载内容1git clone https://github.com:xxxx/xxxx.git
+添加github仓库并获取数据12git remote add origin https://github.com:xxxx/xxxx.gitgit pull &amp;lt;远程主机名&amp;gt; &amp;lt;远程分支名&amp;gt;# 抓取远程仓库所有分支更新并合并到本地
+pull相当于：123git fetch origin mastergit log -p master..origin/mastergit merge origin/master">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Debut"/>
+  <meta property="og:site_name" content="Z World"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/atom.xml" title="Z World" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+</head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">Z World</a></h1>
+  <h2 id="header-h2"></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Debut</h1>
+  
+
+      
+      <time datetime="2014-06-25T09:06:59.000Z">Jun 25 2014</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本的Git指令"><a href="#基本的Git指令" class="headerlink" title="基本的Git指令"></a>基本的Git指令</h2><h4 id="从github下载内容"><a href="#从github下载内容" class="headerlink" title="从github下载内容"></a>从github下载内容</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com:xxxx/xxxx.git</div></pre></td></tr></table></figure>
+<h4 id="添加github仓库并获取数据"><a href="#添加github仓库并获取数据" class="headerlink" title="添加github仓库并获取数据"></a>添加github仓库并获取数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com:xxxx/xxxx.git</div><div class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;<span class="comment"># 抓取远程仓库所有分支更新并合并到本地</span></div></pre></td></tr></table></figure>
+<p>pull相当于：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master</div><div class="line">git <span class="built_in">log</span> -p master..origin/master</div><div class="line">git merge origin/master</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h4 id="提交本地内容到远程分支"><a href="#提交本地内容到远程分支" class="headerlink" title="提交本地内容到远程分支"></a>提交本地内容到远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m <span class="string">"更新提示"</span></div><div class="line">git push origin gh-pages <span class="comment">#提交到gh-pages分支</span></div></pre></td></tr></table></figure>
+<h4 id="切换分支（没有即创建）"><a href="#切换分支（没有即创建）" class="headerlink" title="切换分支（没有即创建）"></a>切换分支（没有即创建）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b ph-pages</div></pre></td></tr></table></figure>
+<h4 id="建立SSH-Key需要关联github"><a href="#建立SSH-Key需要关联github" class="headerlink" title="建立SSH Key需要关联github"></a>建立SSH Key需要关联github</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh -T git@github.com</div></pre></td></tr></table></figure>
+<p>原文输入后，按提示再输入‘yes’即可。<br>更多指南在<a href="http://www.ruanyifeng.com/blog/2014/06/git_remote.html" target="_blank" rel="external">(1)</a>和<a href="http://www.jianshu.com/p/05289a4bc8b2" target="_blank" rel="external">(2)</a>。</p>
+<h2 id="熟悉一下Markdown"><a href="#熟悉一下Markdown" class="headerlink" title="熟悉一下Markdown"></a>熟悉一下Markdown</h2><h3 id="标题分级"><a href="#标题分级" class="headerlink" title="标题分级"></a>标题分级</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><ul>
+<li>这个是<a href="http://keyof.me" target="_blank" rel="external">超链接</a></li>
+<li><em>强调</em></li>
+</ul>
+<h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>代办事项：</p>
+<ol>
+<li>样式需要调整</li>
+<li>上传一些图片</li>
+</ol>
+<h3 id="还有引用层级"><a href="#还有引用层级" class="headerlink" title="还有引用层级"></a>还有引用层级</h3><blockquote>
+<p>一级引用</p>
+<blockquote>
+<p>二级引用</p>
+</blockquote>
+<p>回到一级</p>
+</blockquote>
+<hr>
+<p>上面是分割线</p>
+<h2 id="HEXO指令"><a href="#HEXO指令" class="headerlink" title="HEXO指令"></a>HEXO指令</h2><p>当hexo项目上传到github CSS失效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean</div></pre></td></tr></table></figure></p>
+<p>其他hexo指令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hexo g == hexo generate</div><div class="line">hexo d == hexo deploy</div><div class="line">hexo s == hexo server</div><div class="line">hexo n == hexo new</div><div class="line">hexo d -g == hexo generate &amp;&amp; hexo deploy</div><div class="line">hexo s -g == hexo generate &amp;&amp; hexo server</div></pre></td></tr></table></figure></p>
+<hr>
+<p>HTML也适用吗？</p>
+<p></p><h4>第四级标题</h4><br>不会在文档结构里。<br><br><p></p>
+<p>今天就到此为止吧，^o^</p>
+      
+    </div>
+    
+    <footer>
+      <div class="alignleft">
+      
+  
+  <div class="categories">
+    <a href="/categories/Learn/">Learn</a>
+  </div>
+
+      
+  
+  <div class="tags">
+    <a href="/tags/git/">git</a>, <a href="/tags/github/">github</a>, <a href="/tags/markdown/">markdown</a>, <a href="/tags/hexo/">hexo</a>
+  </div>
+
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    
+  </div>
+</article>
+
+
+<section id="comment">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138849"></script>
+    <!-- UY END -->
+</section>
+
+</div></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div class="inner"><div class="alignleft">
+  <p>
+  
+    &copy; 2017 Zelig Zhou
+  
+  </p>
+  <p>
+    Theme By <a href="https://github.com/zeligzhou/macarons" >Zelig</a> based on <a href="https://github.com/willerce/hexo-theme-noderce" >Noderce</a>
+  </p>
+
+</div>
+<div class="clearfix"></div></div></footer>
+  <script type="text/javascript">
+
+</script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
